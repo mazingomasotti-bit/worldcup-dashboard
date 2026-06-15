@@ -587,13 +587,15 @@ function settleBet(id) {
 }
 
 // ========== 初始加载 ==========
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
   var groups = ['A','B','C','D','E','F','G','H','I','J','K','L'];
   var gh = groups.map(function(g) { return '<option value="' + g + '">' + g + '组</option>'; }).join('');
-  document.getElementById('filter-group').innerHTML += gh;
-  document.getElementById('standings-group').innerHTML += gh;
-})();
-loadMatches();
+  var fg = document.getElementById('filter-group');
+  var sg = document.getElementById('standings-group');
+  if (fg) fg.innerHTML += gh;
+  if (sg) sg.innerHTML += gh;
+  loadMatches();
+});
 </script>
 </body>
 </html>
