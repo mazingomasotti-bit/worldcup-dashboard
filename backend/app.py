@@ -30,14 +30,4 @@ def create_app():
 
     init_db()
 
-    # 首次启动自动播种模拟数据
-    try:
-        count = query("SELECT COUNT(*) as c FROM matches")[0]["c"]
-        if count == 0:
-            import runpy
-            seed_path = os.path.join(base_dir, "seed_data.py")
-            runpy.run_path(seed_path)
-    except Exception as e:
-        print(f"[auto-seed] {e}")
-
     return app

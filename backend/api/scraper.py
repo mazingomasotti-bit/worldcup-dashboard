@@ -35,6 +35,21 @@ def trigger_scrape():
     return jsonify(results)
 
 
+@scraper_bp.route("/seed", methods=["POST"])
+def seed_database():
+    """手动触发数据库播种（首次部署用）"""
+    import runpy, os
+    try:
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        seed_path = os.path.join(base_dir, "seed_data.py")
+        runpy.run_path(seed_path)
+        match_count = query("SELECT COUNT(*) as c FROM matches")[0]["c"]
+        odds_count = query("SELECT COUNT(*) as c FROM odds")[0]["c"]
+        return jsonify({"status": "ok", "matches": match_count, "odds": odds_count})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @scraper_bp.route("/scrape/status")
 def scrape_status():
     row = None
