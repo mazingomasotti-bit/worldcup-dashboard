@@ -35,7 +35,7 @@ def trigger_scrape():
     return jsonify(results)
 
 
-@scraper_bp.route("/seed", methods=["POST"])
+@scraper_bp.route("/seed", methods=["GET", "POST"])
 def seed_database():
     """手动触发数据库播种（首次部署用）"""
     import runpy, os
